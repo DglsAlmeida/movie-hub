@@ -23,3 +23,10 @@ playwright-report/
 
 # Logs
 *.log
+
+# Agent skills
+.agents/
+.claude/
+.cursor/
+.windsurf/
+agent/

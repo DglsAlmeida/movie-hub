@@ -90,16 +90,16 @@ Users can access all routes (/, /search, /auth) regardless of authentication sta
 | AUTH-06 | P1: Auth Redirect on App Load | Verified | Complete |
 | AUTH-07 | P1: Auth Redirect on App Load | Verified | Complete |
 | AUTH-08 | P1: Auth Redirect on App Load | Verified | Complete |
-| AUTH-09 | P2: Sign Out Redirect | Implementing | In Progress |
+| AUTH-09 | P2: Sign Out Redirect | Verified | Complete |
 
-**Coverage:** 9 total, 0 mapped to tasks, 9 unmapped
+**Coverage:** 9 total, 9 mapped to tasks, 0 unmapped ✅
 
 ---
 
 ## Success Criteria
 
-- [ ] Visiting / with no session redirects to /auth/login
-- [ ] Visiting / with a session shows the HomePage
-- [ ] /auth redirects to /auth/login
-- [ ] Logged-in users on auth pages are redirected to /
-- [ ] Sign out returns to /auth/login
+- [x] Visiting / with no session redirects to /auth/login
+- [x] Visiting / with a session shows the HomePage
+- [x] /auth redirects to /auth/login
+- [x] Logged-in users on auth pages are redirected to /
+- [x] Sign out returns to /auth/login
