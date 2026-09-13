@@ -3,11 +3,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import { HomePage } from './features/movies/pages/HomePage'
 import { SearchPage } from './features/movies/pages/SearchPage'
-import {
-  SignUpPage,
-  SignInPage,
-  DashboardPage,
-} from './features/auth'
+import { SignUpPage, SignInPage, DashboardPage } from './features/auth'
 
 const queryClient = new QueryClient()
 

@@ -40,7 +40,12 @@ const MOCK_GENRES = [
   { id: 35, name: 'Comedy' },
 ]
 
-const mockTrending = { page: 1, results: MOCK_MOVIES, total_pages: 1, total_results: 2 }
+const mockTrending = {
+  page: 1,
+  results: MOCK_MOVIES,
+  total_pages: 1,
+  total_results: 2,
+}
 const mockGenres = { genres: MOCK_GENRES }
 const mockSearchAction = {
   page: 1,
@@ -54,11 +59,7 @@ interface ApiBehavior {
   searchStatus?: number
 }
 
-const fulfill = (
-  route: Route,
-  status: number,
-  body: unknown,
-) => {
+const fulfill = (route: Route, status: number, body: unknown) => {
   return route.fulfill({
     status,
     contentType: 'application/json',

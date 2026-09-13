@@ -81,8 +81,6 @@ describe('LoginForm', () => {
         <LoginForm />
       </MemoryRouter>,
     )
-    expect(
-      screen.getByRole('button', { name: /sign up/i }),
-    ).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /sign up/i })).toBeInTheDocument()
   })
 })

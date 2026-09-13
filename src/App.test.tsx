@@ -20,7 +20,9 @@ describe('App', () => {
       JSON.stringify({ name: 'John', email: 'john@test.com' }),
     )
     render(<App />)
-    expect(screen.queryByRole('heading', { name: /sign in/i })).not.toBeInTheDocument()
+    expect(
+      screen.queryByRole('heading', { name: /sign in/i }),
+    ).not.toBeInTheDocument()
   })
 
   it('redirects /auth to login page', () => {
