@@ -9,7 +9,7 @@ export const SignInPage = () => {
   useEffect(() => {
     const session = getSession()
     if (session) {
-      navigate('/auth/dashboard', { replace: true })
+      navigate('/', { replace: true })
     }
   }, [navigate])
 

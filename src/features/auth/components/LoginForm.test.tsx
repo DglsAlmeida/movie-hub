@@ -48,7 +48,7 @@ describe('LoginForm', () => {
     ).toBeInTheDocument()
   })
 
-  it('navigates to dashboard after successful login', async () => {
+  it('navigates to home after successful login', async () => {
     sessionStorage.setItem(
       'auth_users',
       JSON.stringify([
@@ -59,7 +59,7 @@ describe('LoginForm', () => {
       <MemoryRouter initialEntries={['/auth/login']}>
         <Routes>
           <Route path="/auth/login" element={<LoginForm />} />
-          <Route path="/auth/dashboard" element={<div>Dashboard</div>} />
+          <Route path="/" element={<div>Home</div>} />
         </Routes>
       </MemoryRouter>,
     )
@@ -71,7 +71,7 @@ describe('LoginForm', () => {
     })
     fireEvent.click(screen.getByRole('button', { name: /sign in/i }))
     await waitFor(() => {
-      expect(screen.getByText(/dashboard/i)).toBeInTheDocument()
+      expect(screen.getByText(/home/i)).toBeInTheDocument()
     })
   })
 

@@ -32,7 +32,7 @@ export const LoginForm = () => {
       return
     }
     saveSession({ name: user.name, email: user.email })
-    navigate('/auth/dashboard')
+    navigate('/')
   }
 
   return (
