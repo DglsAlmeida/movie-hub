@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test'
 
 test.describe('Auth Flow', () => {
   test('complete signup → login → dashboard flow', async ({ page }) => {
-    await page.goto('/')
+    await page.goto('/auth')
 
     await page.fill('input[id="name"]', 'John Doe')
     await page.fill('input[id="email"]', 'john@test.com')
@@ -18,7 +18,7 @@ test.describe('Auth Flow', () => {
   })
 
   test('sign out returns to login', async ({ page }) => {
-    await page.goto('/')
+    await page.goto('/auth')
 
     await page.fill('input[id="name"]', 'John Doe')
     await page.fill('input[id="email"]', 'john@test.com')
@@ -34,7 +34,7 @@ test.describe('Auth Flow', () => {
   })
 
   test('session persists on page refresh', async ({ page }) => {
-    await page.goto('/')
+    await page.goto('/auth')
 
     await page.fill('input[id="name"]', 'John Doe')
     await page.fill('input[id="email"]', 'john@test.com')
