@@ -1,21 +1,8 @@
-import { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { getSession } from '@/utils/auth'
+import { AuthPage } from '../components/AuthPage'
 import { SignupForm } from '../components/SignupForm'
 
-export const SignUpPage = () => {
-  const navigate = useNavigate()
-
-  useEffect(() => {
-    const session = getSession()
-    if (session) {
-      navigate('/', { replace: true })
-    }
-  }, [navigate])
-
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-background p-4">
-      <SignupForm />
-    </div>
-  )
-}
+export const SignUpPage = () => (
+  <AuthPage>
+    <SignupForm />
+  </AuthPage>
+)

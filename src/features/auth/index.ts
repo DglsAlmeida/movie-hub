@@ -1,6 +1,8 @@
 export { SignupForm } from './components/SignupForm'
 export { LoginForm } from './components/LoginForm'
 export { Dashboard } from './components/Dashboard'
+export { AuthPage } from './components/AuthPage'
+export { useAuthRedirect } from './hooks/useAuthRedirect'
 export { SignUpPage } from './pages/SignUpPage'
 export { SignInPage } from './pages/SignInPage'
 export { DashboardPage } from './pages/DashboardPage'
