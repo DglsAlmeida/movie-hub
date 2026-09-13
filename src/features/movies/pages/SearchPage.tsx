@@ -1,17 +1,16 @@
-import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useSearchMovies } from '../services/useSearch'
+import { useSearchPage } from '../hooks/useSearchPage'
 import { MovieGrid } from '../components/MovieGrid'
 import { SearchBar } from '../components/SearchBar'
 import { LoadingSkeleton } from '../components/LoadingSkeleton'
+import { ErrorState } from '../components/ErrorState'
 import { Button } from '@/components/ui/button'
-import { ArrowLeft, AlertCircle, RotateCcw } from 'lucide-react'
+import { ArrowLeft } from 'lucide-react'
 
 export const SearchPage = () => {
   const navigate = useNavigate()
-  const [searchQuery, setSearchQuery] = useState('')
-
-  const { data, isLoading, error, refetch } = useSearchMovies(searchQuery)
+  const { searchQuery, handleSearch, movies, isLoading, error, refetch } =
+    useSearchPage()
 
   const handleMovieClick = (movie: { id: number }) => {
     navigate(`/movie/${movie.id}`)
@@ -31,17 +30,12 @@ export const SearchPage = () => {
           </Button>
           <h1 className="text-3xl font-bold">Search Movies</h1>
         </div>
-        <div className="text-center py-12">
-          <AlertCircle className="h-12 w-12 text-destructive mx-auto mb-4" />
-          <h2 className="text-xl font-semibold mb-2">Something went wrong</h2>
-          <p className="text-muted-foreground mb-4">
-            {error instanceof Error ? error.message : 'Failed to search movies'}
-          </p>
-          <Button onClick={() => refetch()} variant="outline">
-            <RotateCcw className="h-4 w-4 mr-2" />
-            Try again
-          </Button>
-        </div>
+        <ErrorState
+          message={
+            error instanceof Error ? error.message : 'Failed to search movies'
+          }
+          onRetry={refetch}
+        />
       </div>
     )
   }
@@ -54,7 +48,7 @@ export const SearchPage = () => {
           Back to Home
         </Button>
         <h1 className="text-3xl font-bold mb-4">Search Movies</h1>
-        <SearchBar onSearch={setSearchQuery} />
+        <SearchBar onSearch={handleSearch} />
       </div>
 
       <section>
@@ -63,14 +57,11 @@ export const SearchPage = () => {
         ) : searchQuery ? (
           <>
             <h2 className="text-2xl font-semibold mb-4">
-              {data?.results.length
-                ? `Found ${data.results.length} results for "${searchQuery}"`
+              {movies.length
+                ? `Found ${movies.length} results for "${searchQuery}"`
                 : `No results for "${searchQuery}"`}
             </h2>
-            <MovieGrid
-              movies={data?.results || []}
-              onMovieClick={handleMovieClick}
-            />
+            <MovieGrid movies={movies} onMovieClick={handleMovieClick} />
           </>
         ) : (
           <div className="text-center py-12">
