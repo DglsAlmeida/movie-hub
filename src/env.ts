@@ -19,5 +19,5 @@ function validateEnv() {
 }
 
 export const env = import.meta.env.MODE === 'test'
-  ? (import.meta.env as z.infer<typeof envSchema>)
+  ? (import.meta.env as unknown as z.infer<typeof envSchema>)
   : validateEnv()

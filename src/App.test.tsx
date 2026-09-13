@@ -24,11 +24,11 @@ describe('App', () => {
     expect(screen.getByPlaceholderText(/search movies/i)).toBeInTheDocument()
   })
 
-  it('shows auth page on /auth route', () => {
+  it('redirects /auth to login page', () => {
     window.history.pushState({}, '', '/auth')
     render(<App />)
     expect(
-      screen.getByRole('heading', { name: /create account/i })
+      screen.getByRole('heading', { name: /sign in/i })
     ).toBeInTheDocument()
   })
 })

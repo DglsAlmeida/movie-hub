@@ -15,7 +15,7 @@ export const SearchBar = ({
   debounceMs = 300,
 }: SearchBarProps) => {
   const [value, setValue] = useState('')
-  const debounceRef = useRef<NodeJS.Timeout | null>(null)
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
     if (debounceRef.current) {

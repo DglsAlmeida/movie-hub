@@ -1,11 +1,9 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import { MemoryRouter, Routes, Route } from 'react-router-dom'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { LoginForm } from './LoginForm'
 
 describe('LoginForm', () => {
-  const mockOnSuccess = vi.fn()
-  const mockOnSwitchToSignup = vi.fn()
-
   beforeEach(() => {
     vi.clearAllMocks()
     sessionStorage.clear()
@@ -13,10 +11,9 @@ describe('LoginForm', () => {
 
   it('renders all form fields', () => {
     render(
-      <LoginForm
-        onSuccess={mockOnSuccess}
-        onSwitchToSignup={mockOnSwitchToSignup}
-      />,
+      <MemoryRouter>
+        <LoginForm />
+      </MemoryRouter>,
     )
     expect(screen.getByLabelText(/email/i)).toBeInTheDocument()
     expect(screen.getByLabelText(/password/i)).toBeInTheDocument()
@@ -24,10 +21,9 @@ describe('LoginForm', () => {
 
   it('shows validation errors for empty fields', async () => {
     render(
-      <LoginForm
-        onSuccess={mockOnSuccess}
-        onSwitchToSignup={mockOnSwitchToSignup}
-      />,
+      <MemoryRouter>
+        <LoginForm />
+      </MemoryRouter>,
     )
     fireEvent.click(screen.getByRole('button', { name: /sign in/i }))
     expect(await screen.findByText('Email is required')).toBeInTheDocument()
@@ -36,10 +32,9 @@ describe('LoginForm', () => {
 
   it('shows error for invalid credentials', async () => {
     render(
-      <LoginForm
-        onSuccess={mockOnSuccess}
-        onSwitchToSignup={mockOnSwitchToSignup}
-      />,
+      <MemoryRouter>
+        <LoginForm />
+      </MemoryRouter>,
     )
     fireEvent.input(screen.getByLabelText(/email/i), {
       target: { value: 'nonexistent@test.com' },
@@ -53,7 +48,7 @@ describe('LoginForm', () => {
     ).toBeInTheDocument()
   })
 
-  it('calls onSuccess after successful login', async () => {
+  it('navigates to dashboard after successful login', async () => {
     sessionStorage.setItem(
       'auth_users',
       JSON.stringify([
@@ -61,10 +56,12 @@ describe('LoginForm', () => {
       ]),
     )
     render(
-      <LoginForm
-        onSuccess={mockOnSuccess}
-        onSwitchToSignup={mockOnSwitchToSignup}
-      />,
+      <MemoryRouter initialEntries={['/auth/login']}>
+        <Routes>
+          <Route path="/auth/login" element={<LoginForm />} />
+          <Route path="/auth/dashboard" element={<div>Dashboard</div>} />
+        </Routes>
+      </MemoryRouter>,
     )
     fireEvent.input(screen.getByLabelText(/email/i), {
       target: { value: 'john@test.com' },
@@ -74,18 +71,18 @@ describe('LoginForm', () => {
     })
     fireEvent.click(screen.getByRole('button', { name: /sign in/i }))
     await waitFor(() => {
-      expect(mockOnSuccess).toHaveBeenCalled()
+      expect(screen.getByText(/dashboard/i)).toBeInTheDocument()
     })
   })
 
-  it('switches to signup view when sign up is clicked', () => {
+  it('has a link to signup page', () => {
     render(
-      <LoginForm
-        onSuccess={mockOnSuccess}
-        onSwitchToSignup={mockOnSwitchToSignup}
-      />,
+      <MemoryRouter>
+        <LoginForm />
+      </MemoryRouter>,
     )
-    fireEvent.click(screen.getByRole('button', { name: /sign up/i }))
-    expect(mockOnSwitchToSignup).toHaveBeenCalled()
+    expect(
+      screen.getByRole('button', { name: /sign up/i }),
+    ).toBeInTheDocument()
   })
 })
