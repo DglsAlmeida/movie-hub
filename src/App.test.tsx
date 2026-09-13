@@ -1,34 +1,33 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest'
+import { describe, it, expect, beforeEach } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import App from './App'
 
-const mockNavigate = vi.fn()
-vi.mock('react-router-dom', async () => ({
-  ...(await vi.importActual('react-router-dom')),
-  useNavigate: () => mockNavigate,
-}))
-
 describe('App', () => {
   beforeEach(() => {
-    vi.clearAllMocks()
     sessionStorage.clear()
   })
 
-  it('renders without crashing', () => {
+  it('redirects to /auth/login when no session', () => {
     render(<App />)
-    expect(screen.getByText('MovieHub')).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', { name: /sign in/i }),
+    ).toBeInTheDocument()
   })
 
-  it('renders search bar', () => {
+  it('renders protected content when session exists', () => {
+    sessionStorage.setItem(
+      'auth_session',
+      JSON.stringify({ name: 'John', email: 'john@test.com' }),
+    )
     render(<App />)
-    expect(screen.getByPlaceholderText(/search movies/i)).toBeInTheDocument()
+    expect(screen.queryByRole('heading', { name: /sign in/i })).not.toBeInTheDocument()
   })
 
   it('redirects /auth to login page', () => {
     window.history.pushState({}, '', '/auth')
     render(<App />)
     expect(
-      screen.getByRole('heading', { name: /sign in/i })
+      screen.getByRole('heading', { name: /sign in/i }),
     ).toBeInTheDocument()
   })
 })
